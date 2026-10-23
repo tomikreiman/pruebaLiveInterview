@@ -1,0 +1,26 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8082:7000"
+    volumes:
+      - .:/app:ro
+      - nuget-packages:/home/app/.nuget/packages
+      - data:/app/data
+    environment:
+      - DB_PATH=/app/data/jobs.db
+      - OPENAPI_PATH=/tmp/job-notifier/openapi.yaml
+      - APP_PORT=7000
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:7000/"]
+      interval: 5s
+      timeout: 3s
+      retries: 30
+      start_period: 90s
+    restart: unless-stopped
+
+volumes:
+  nuget-packages:
+  data:

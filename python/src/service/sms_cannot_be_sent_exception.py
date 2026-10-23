@@ -1,0 +1,2 @@
+class SmsCannotBeSentException(Exception):
+    pass

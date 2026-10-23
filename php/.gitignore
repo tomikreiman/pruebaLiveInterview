@@ -1,0 +1,29 @@
+# Vendor directory
+vendor/
+
+# IDE files
+.idea/
+.vscode/
+.devin/
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Database files
+data/*.db
+data/*.db-shm
+data/*.db-wal
+
+# Logs
+*.log
+
+# Environment files
+.env
+.env.local
+
+# Generated OpenAPI spec (derived from code at container startup)
+public/openapi.yaml

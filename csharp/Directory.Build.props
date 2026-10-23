@@ -1,0 +1,8 @@
+<Project>
+  <PropertyGroup>
+    <JobNotifierBuildRoot Condition="'$(JOB_NOTIFIER_BUILD_ROOT)' == ''">$(MSBuildThisFileDirectory).build/</JobNotifierBuildRoot>
+    <JobNotifierBuildRoot Condition="'$(JOB_NOTIFIER_BUILD_ROOT)' != ''">$(JOB_NOTIFIER_BUILD_ROOT)</JobNotifierBuildRoot>
+    <BaseOutputPath>$(JobNotifierBuildRoot)bin/$(MSBuildProjectName)/</BaseOutputPath>
+    <BaseIntermediateOutputPath>$(JobNotifierBuildRoot)obj/$(MSBuildProjectName)/</BaseIntermediateOutputPath>
+  </PropertyGroup>
+</Project>

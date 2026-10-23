@@ -1,0 +1,38 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+.venv/
+venv/
+.env/
+env/
+.env
+.env.local
+
+# IDE files
+.idea/
+.vscode/
+.devin/
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Database files
+data/*.db
+data/*.db-shm
+data/*.db-wal
+
+# Logs
+*.log
+
+# pytest
+.pytest_cache/
+
+# Generated OpenAPI spec (derived from code at container startup)
+public/openapi.yaml
