@@ -2,6 +2,8 @@ package com.avature.jobnotifier.config;
 
 import com.avature.jobnotifier.controller.HomeController;
 import com.avature.jobnotifier.controller.JobController;
+import com.avature.jobnotifier.controller.ScheduleController;
+import com.avature.jobnotifier.controller.StatsController;
 import io.javalin.Javalin;
 import io.javalin.http.HttpStatus;
 
@@ -16,6 +18,8 @@ public final class Routes {
     public static void register(Javalin app, Container container) {
         HomeController homeController = container.get("home_controller");
         JobController jobController = container.get("job_controller");
+        StatsController statsController = container.get("stats_controller");
+        ScheduleController scheduleController = container.get("schedule_controller");
 
         app.get("/", homeController::index);
 
@@ -38,5 +42,9 @@ public final class Routes {
         });
 
         app.post("/api/jobs", jobController::createJob);
+
+        app.get("/api/jobs/stats", statsController::getStats);
+
+        app.get("/api/jobs/schedule", scheduleController::getSchedule);
     }
 }

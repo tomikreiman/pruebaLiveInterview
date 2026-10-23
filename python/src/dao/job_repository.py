@@ -19,3 +19,9 @@ class JobRepository(IJobRepository):
         )
         self._db.commit()
         return cursor.lastrowid
+
+    def get_all(self) -> list:
+        cursor = self._db.execute(
+            "SELECT id, name, tags, salary, start_hour, end_hour, created_at FROM jobs"
+        )
+        return [dict(row) for row in cursor.fetchall()]

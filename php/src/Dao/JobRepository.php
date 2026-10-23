@@ -27,4 +27,10 @@ class JobRepository implements IJobRepository {
 
         return (int)$this->pdo->lastInsertId();
     }
+
+    public function getAll(): array {
+        $stmt = $this->pdo->query("SELECT id, name, tags, salary, start_hour, end_hour, created_at FROM jobs");
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 }

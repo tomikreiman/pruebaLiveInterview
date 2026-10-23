@@ -82,6 +82,32 @@ try {
         }
     }
     
+    // Seed sample jobs with interview/event slots [start_hour, end_hour) in 24h format
+    // if the table is empty. Slots occupy a single shared resource (one room/interviewer).
+    $count = (int)$pdo->query("SELECT COUNT(*) FROM jobs")->fetchColumn();
+    if ($count === 0) {
+        $samples = [
+            ['Alpha',   ['php'],             50000,  9, 10],
+            ['Bravo',   ['go'],              60000, 10, 11],
+            ['Charlie', ['php', 'backend'],  70000, 11, 12],
+            ['Delta',   ['remote'],          80000, 13, 14],
+            ['Echo',    ['php'],             90000,  8, 17],
+        ];
+        $stmt = $pdo->prepare("
+            INSERT INTO jobs (name, tags, salary, start_hour, end_hour)
+            VALUES (:name, :tags, :salary, :start_hour, :end_hour)
+        ");
+        foreach ($samples as [$name, $tags, $salary, $start, $end]) {
+            $stmt->execute([
+                ':name' => $name,
+                ':tags' => json_encode($tags),
+                ':salary' => $salary,
+                ':start_hour' => $start,
+                ':end_hour' => $end,
+            ]);
+        }
+    }
+
     echo "Database initialized successfully.\n";
 } catch (PDOException $e) {
     die("Database connection failed: " . $e->getMessage() . "\n");

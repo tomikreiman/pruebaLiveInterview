@@ -8,8 +8,12 @@ from src.service.job_notifier import JobNotifier
 from src.service.job_service import JobService
 from src.service.mail_sender import MailSender
 from src.service.sms_sender import SmsSender
+from src.service.salary_stats_service import SalaryStatsService
+from src.service.schedule_service import ScheduleService
 from src.controller.home_controller import HomeController
 from src.controller.job_controller import JobController
+from src.controller.stats_controller import StatsController
+from src.controller.schedule_controller import ScheduleController
 
 
 class Container:
@@ -53,6 +57,20 @@ def configure_dependencies(container: Container) -> None:
     ))
 
     container.set("home_controller", lambda c: HomeController())
+
+    container.set("salary_stats_service", lambda c: SalaryStatsService())
+
+    container.set("stats_controller", lambda c: StatsController(
+        c.get("job_repository"),
+        c.get("salary_stats_service"),
+    ))
+
+    container.set("schedule_service", lambda c: ScheduleService())
+
+    container.set("schedule_controller", lambda c: ScheduleController(
+        c.get("job_repository"),
+        c.get("schedule_service"),
+    ))
 
 
 def _create_logger() -> logging.Logger:

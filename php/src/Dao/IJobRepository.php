@@ -6,4 +6,6 @@ use App\Domain\IJob;
 
 interface IJobRepository {
     public function createJob(IJob $job): int;
+
+    public function getAll(): array;
 }

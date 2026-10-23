@@ -3,6 +3,8 @@
 use Slim\App;
 use App\Controller\HomeController;
 use App\Controller\JobController;
+use App\Controller\StatsController;
+use App\Controller\ScheduleController;
 
 return function (App $app) {
     // Landing page
@@ -20,4 +22,10 @@ return function (App $app) {
 
     // API endpoint to save a new job
     $app->post('/api/jobs', [JobController::class, 'createJob']);
+
+    // API endpoint for job salary/tag statistics
+    $app->get('/api/jobs/stats', [StatsController::class, 'getStats']);
+
+    // API endpoint for max non-overlapping notification-window schedule
+    $app->get('/api/jobs/schedule', [ScheduleController::class, 'getSchedule']);
 };

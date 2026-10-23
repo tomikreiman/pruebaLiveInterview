@@ -2,6 +2,8 @@ package com.avature.jobnotifier.config;
 
 import com.avature.jobnotifier.controller.HomeController;
 import com.avature.jobnotifier.controller.JobController;
+import com.avature.jobnotifier.controller.ScheduleController;
+import com.avature.jobnotifier.controller.StatsController;
 import com.avature.jobnotifier.dao.IJobRepository;
 import com.avature.jobnotifier.dao.IPersonRepository;
 import com.avature.jobnotifier.dao.JobRepository;
@@ -11,6 +13,8 @@ import com.avature.jobnotifier.service.ISmsSender;
 import com.avature.jobnotifier.service.JobNotifier;
 import com.avature.jobnotifier.service.JobService;
 import com.avature.jobnotifier.service.MailSender;
+import com.avature.jobnotifier.service.SalaryStatsService;
+import com.avature.jobnotifier.service.ScheduleService;
 import com.avature.jobnotifier.service.SmsSender;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -48,6 +52,20 @@ public final class Dependencies {
         ));
 
         container.set("home_controller", c -> new HomeController());
+
+        container.set("salary_stats_service", c -> new SalaryStatsService());
+
+        container.set("stats_controller", c -> new StatsController(
+                c.<IJobRepository>get("job_repository"),
+                c.<SalaryStatsService>get("salary_stats_service")
+        ));
+
+        container.set("schedule_service", c -> new ScheduleService());
+
+        container.set("schedule_controller", c -> new ScheduleController(
+                c.<IJobRepository>get("job_repository"),
+                c.<ScheduleService>get("schedule_service")
+        ));
     }
 
     private static Connection createConnection() {

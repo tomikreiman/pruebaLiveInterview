@@ -10,8 +10,12 @@ use App\Dao\IJobRepository;
 use App\Dao\PersonRepository;
 use App\Dao\IPersonRepository;
 use App\Service\JobService;
+use App\Service\SalaryStatsService;
+use App\Service\ScheduleService;
 use App\Controller\HomeController;
 use App\Controller\JobController;
+use App\Controller\StatsController;
+use App\Controller\ScheduleController;
 use App\Service\IMailSender;
 use App\Service\MailSender;
 use App\Service\ISmsSender;
@@ -64,5 +68,27 @@ return function (Container $container) {
 
     $container->set(HomeController::class, function() {
         return new HomeController();
+    });
+
+    $container->set(SalaryStatsService::class, function() {
+        return new SalaryStatsService();
+    });
+
+    $container->set(StatsController::class, function(ContainerInterface $c) {
+        return new StatsController(
+            $c->get(IJobRepository::class),
+            $c->get(SalaryStatsService::class)
+        );
+    });
+
+    $container->set(ScheduleService::class, function() {
+        return new ScheduleService();
+    });
+
+    $container->set(ScheduleController::class, function(ContainerInterface $c) {
+        return new ScheduleController(
+            $c->get(IJobRepository::class),
+            $c->get(ScheduleService::class)
+        );
     });
 };
